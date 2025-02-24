@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .person-list {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+      }
+      .person-item {
+          border: 1px solid #ddd;
+          padding: 10px;
+          margin-bottom: 10px;
+          border-radius: 5px;
+          background-color: #f9f9f9;
+      }
+      .person-item h2 {
+          margin: 0;
+          font-size: 1.2em;
+      }
+      .person-item p {
+          margin: 5px 0;
+      }
+  </style>
+  </head>
+  <body>
+    <div class="person-list">
+      <!-- js 출력 -->
+    </div>
+    <script>
+      // json 데이터 가져오는 함수
+      function getPeople() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "ajax_json-2.json", true);
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            const people = JSON.parse(xhr.responseText);
+            console.log();
+            displayPeople(people);
+          }
+        };
+        xhr.send();
+      }
+      // html 요소에 데이터를 추가하는 함수
+      function displayPeople(people) {
+        console.log(people); // array(배열)로 나옴
+        const personList = document.querySelector(".person-list");
+        personList.innerHTML = "" // 기존 내용은 초기화
+        people.forEach((person) => {
+          console.log(person); // 각각 하나로 나눠져서 나옴
+          const newDiv = document.createElement("div");
+          newDiv.className = "person-item"
+          newDiv.innerHTML = `
+          <h2>이름 : ${person.name}</h2>
+         <p>나이 : ${person.age}</p>
+         <p>학생입니까? : ${person.isStudent ? "네" : "아니요"}</p>
+          `
+          personList.appendChild(newDiv)
+        });
+      }
+      getPeople();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax 예제</title>
+    <!-- ajax는 옛날 버전 -->
+  </head>
+  <body>
+    <script>
+      // 1. get 요청으로 json데이터 가져오기
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET" , "data1.json" , true); // get 방식으로 data.json 파일 요청법 (비동기처리방식)
+    //   console.log(xhr);
+
+      xhr.onload = function () {
+        // 요청이 완료되면 실행되는 콜백 함수
+        if (xhr.status === 200) {
+        //   console.log(xhr);
+          const data = JSON.parse(xhr.responseText)
+        //   console.log(data);
+        //   console.log(data.users); //이게 진짜 우리가 필요한 데이터
+          
+          data.users.forEach((item , index)=>{
+            // data.users.forEach((여기 이름은 내 마음대로 , 여기는 i 또는 index 로 고정)=>{}
+            console.log(item);
+            console.log(index);
+            document.write(`이름: ${item.name} , 나이: ${item.age} <br>`)
+          })
+        }
+      };
+      xhr.send() // 요청을 전송
+
+      // 2. POST 요청으로 데이터 보내기
+      const xhr2 = new XMLHttpRequest();
+      xhr2.open("POST" , "datafile.php" , true) // POST 방식으로 datafile.php 에 우리 파일을 요청(보내기) (비동기처리방식)
+      xhr2.setRequestHeader("content-Type" , "application/json") // 요청헤더에 json 형식 지정
+      xhr2.onload = function(){
+        if(xhr2.status === 200){
+          console.log("데이터 전송 완료"); // 성공하면 출력
+        }
+      }
+      // json 문자열로 데이터 전송
+      xhr2.send(JSON.stringify({"id": 1, "name": "홍길동", "age": 25}))
+    </script>
+  </body>
+</html>
