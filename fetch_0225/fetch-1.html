@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetxh() 데이터 받아오기</title>
+</head>
+<body>
+    <script>
+        fetch("fetch-1.json")
+        // 1.json 파일 받아오기
+        .then(function(respose){
+            console.log(respose);
+
+            // ↓ 에러메시지 받을 추가 사항. 없어도 됨 if
+        if(!respose.ok){
+        throw new Error("네트워크 응답을 받지 못 함.")
+        }
+        return respose.json()
+        })
+
+        .then(function(data){
+            console.log(data);
+        })
+        // ↓ 에러창
+        .catch(function(error){
+        })
+    </script>
+</body>
+</html>
